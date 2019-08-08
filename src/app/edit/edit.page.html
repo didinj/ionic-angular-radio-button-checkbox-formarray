@@ -1,8 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>edit</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +15,7 @@
       </ion-list-header>
       <div formArrayName="quests">
         <div *ngFor="let qs of qsForm.get('quests')['controls']; let i=index" [formGroupName]="i">
-          <ion-radio-group formControlName="choice">
+          <ion-radio-group formControlName="answer">
             <ion-list-header>
               <ion-label>{{qs.controls.nbr.value}}. {{qs.controls.question.value}}</ion-label>
             </ion-list-header>
@@ -48,19 +49,19 @@
             </ion-list-header>
             <ion-item>
               <ion-label>{{qs2.controls.choice1.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice1.value" (click)="selectChecked(j, qs2.controls.choice1.value)"></ion-checkbox>
+              <ion-checkbox slot="start" [value]="qs2.controls.choice1.value" [checked]="setChecked(j, qs2.controls.choice1.value)" (click)="selectChecked(j, qs2.controls.choice1.value)"></ion-checkbox>
             </ion-item>
             <ion-item>
               <ion-label>{{qs2.controls.choice2.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice2.value" (click)="selectChecked(j, qs2.controls.choice2.value)"></ion-checkbox>
+              <ion-checkbox slot="start" [value]="qs2.controls.choice2.value" [checked]="setChecked(j, qs2.controls.choice2.value)" (click)="selectChecked(j, qs2.controls.choice2.value)"></ion-checkbox>
             </ion-item>
             <ion-item>
               <ion-label>{{qs2.controls.choice3.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice3.value" (click)="selectChecked(j, qs2.controls.choice3.value)"></ion-checkbox>
+              <ion-checkbox slot="start" [value]="qs2.controls.choice3.value" [checked]="setChecked(j, qs2.controls.choice3.value)" (click)="selectChecked(j, qs2.controls.choice3.value)"></ion-checkbox>
             </ion-item>
             <ion-item>
               <ion-label>{{qs2.controls.choice4.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice4.value" (click)="selectChecked(j, qs2.controls.choice4.value)"></ion-checkbox>
+              <ion-checkbox slot="start" [value]="qs2.controls.choice4.value" [checked]="setChecked(j, qs2.controls.choice4.value)" (click)="selectChecked(j, qs2.controls.choice4.value)"></ion-checkbox>
             </ion-item>
           </ion-radio-group>
         </div>

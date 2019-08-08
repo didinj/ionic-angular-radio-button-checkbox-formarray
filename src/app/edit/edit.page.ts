@@ -1,67 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { Router  } from '@angular/router';
+import { ActivatedRoute, Router  } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-edit',
+  templateUrl: './edit.page.html',
+  styleUrls: ['./edit.page.scss'],
 })
-export class HomePage implements OnInit {
+export class EditPage implements OnInit {
 
   qsForm: FormGroup;
-  singleChoice: any[] = [
-    {
-      nbr: '1',
-      question: 'What is your job?',
-      choice1: 'Full Stack Developer',
-      choice2: 'Frontend Developer',
-      choice3: 'Backend Developer',
-      choice4: 'Database Administrator',
-      choice: ''
-    },
-    {
-      nbr: '2',
-      question: 'Which frontend framework do you use?',
-      choice1: 'Angular',
-      choice2: 'React',
-      choice3: 'Vue',
-      choice4: 'Ember',
-      choice: ''
-    },
-    {
-      nbr: '3',
-      question: 'Which backend framework do you use?',
-      choice1: 'Spring',
-      choice2: 'Django',
-      choice3: 'Laravel',
-      choice4: 'Ruby on Rails',
-      choice: ''
-    }
-  ];
+  data: any[] = [];
 
-  multiChoice: any[] = [
-    {
-      nbr: '4',
-      question: 'Choose one or more of your frontend skills!',
-      choice1: 'Angular',
-      choice2: 'React',
-      choice3: 'Vue',
-      choice4: 'Ember',
-      choice: ''
-    },
-    {
-      nbr: '5',
-      question: 'Choose one or more of your backend skills!',
-      choice1: 'Spring',
-      choice2: 'Django',
-      choice3: 'Laravel',
-      choice4: 'Ruby on Rails',
-      choice: ''
-    }
-  ];
-
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute) {
+    this.data = JSON.parse(this.activatedRoute.snapshot.params.data);
     this.qsForm = this.formBuilder.group({
       quests: this.formBuilder.array([
         this.initQuests()
@@ -74,8 +26,8 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.qsForm = this.formBuilder.group({
-      quests: this.setQuest(this.singleChoice),
-      quests2: this.setQuest(this.multiChoice)
+      quests: this.setQuest(this.data.slice(0, 3)),
+      quests2: this.setQuest(this.data.slice(3, 5))
     });
   }
 
@@ -87,7 +39,7 @@ export class HomePage implements OnInit {
       choice2: '',
       choice3: '',
       choice4: '',
-      choice: '',
+      answer: '',
     });
   }
 
@@ -102,7 +54,7 @@ export class HomePage implements OnInit {
         choice2: q.choice2,
         choice3: q.choice3,
         choice4: q.choice4,
-        choice: ''
+        answer: q.answer
       }));
     });
     return arr;
@@ -126,16 +78,23 @@ export class HomePage implements OnInit {
     }
   }
 
+  setChecked(i: any, value: any): boolean {
+    const formArray = this.qsForm.controls.quests2 as FormArray;
+    const formGroup = formArray.at(i) as FormGroup;
+    const answer = formGroup.controls.answer;
+    if (answer.value.search(value) === -1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   onSubmit() {
     const submitData: any[] = [];
     this.qsForm.value.quests.forEach((qu: any) => {
       submitData.push({
         nbr: qu.nbr,
         question: qu.question,
-        choice1: qu.choice1,
-        choice2: qu.choice2,
-        choice3: qu.choice3,
-        choice4: qu.choice4,
         answer: qu.choice
       });
     });
@@ -143,10 +102,6 @@ export class HomePage implements OnInit {
       submitData.push({
         nbr: qu2.nbr,
         question: qu2.question,
-        choice1: qu2.choice1,
-        choice2: qu2.choice2,
-        choice3: qu2.choice3,
-        choice4: qu2.choice4,
         answer: qu2.choice
       });
     });
