@@ -1,73 +1,35 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Dynamic Radio and Checkbox
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form [formGroup]="qsForm">
-    <ion-list>
-      <ion-list-header>
-        <ion-label>Single Choice:</ion-label>
-      </ion-list-header>
-      <div formArrayName="quests">
-        <div *ngFor="let qs of qsForm.get('quests')['controls']; let i=index" [formGroupName]="i">
-          <ion-radio-group formControlName="choice">
-            <ion-list-header>
-              <ion-label>{{qs.controls.nbr.value}}. {{qs.controls.question.value}}</ion-label>
-            </ion-list-header>
-            <ion-item>
-              <ion-label>{{qs.controls.choice1.value}}</ion-label>
-              <ion-radio slot="start" [value]="qs.controls.choice1.value"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs.controls.choice2.value}}</ion-label>
-              <ion-radio slot="start" [value]="qs.controls.choice2.value"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs.controls.choice3.value}}</ion-label>
-              <ion-radio slot="start" [value]="qs.controls.choice3.value"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs.controls.choice4.value}}</ion-label>
-              <ion-radio slot="start" [value]="qs.controls.choice4.value"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </div>
+<ion-content [fullscreen]="true">
+  <form [formGroup]="qsForm" (ngSubmit)="onSubmit()">
+    <ng-container formArrayName="answers">
+      <div *ngFor="let q of questions; let i = index">
+        <h2>{{ q.title }}</h2>
+
+        <!-- Single-choice (radio) -->
+        <ion-list *ngIf="q.type==='radio'" [formControlName]="i" radio-group>
+          <ion-item *ngFor="let opt of q.options">
+            <ion-label>{{ opt }}</ion-label>
+            <ion-radio [value]="opt"></ion-radio>
+          </ion-item>
+        </ion-list>
+
+        <!-- Multiple-choice (checkboxes) -->
+        <ng-container *ngIf="q.type==='checkbox'" [formGroupName]="i">
+          <ion-item *ngFor="let opt of q.options">
+            <ion-label>{{ opt }}</ion-label>
+            <ion-checkbox [formControlName]="opt"></ion-checkbox>
+          </ion-item>
+        </ng-container>
+
       </div>
-      <ion-list-header>
-        <ion-label>Multiple Choices:</ion-label>
-      </ion-list-header>
-      <div formArrayName="quests2">
-        <div *ngFor="let qs2 of qsForm.get('quests2')['controls']; let j=index" [formGroupName]="j">
-          <ion-radio-group>
-            <ion-list-header>
-              <ion-label>{{qs2.controls.nbr.value}}. {{qs2.controls.question.value}}</ion-label>
-            </ion-list-header>
-            <ion-item>
-              <ion-label>{{qs2.controls.choice1.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice1.value" (click)="selectChecked(j, qs2.controls.choice1.value)"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs2.controls.choice2.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice2.value" (click)="selectChecked(j, qs2.controls.choice2.value)"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs2.controls.choice3.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice3.value" (click)="selectChecked(j, qs2.controls.choice3.value)"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs2.controls.choice4.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice4.value" (click)="selectChecked(j, qs2.controls.choice4.value)"></ion-checkbox>
-            </ion-item>
-          </ion-radio-group>
-        </div>
-      </div>
-      <ion-item>
-        <ion-button shape="round" class="submit-button" (click)="onSubmit()">Submit</ion-button>
-      </ion-item>
-    </ion-list>
+    </ng-container>
+    <ion-button expand="full" type="submit">Submit</ion-button>
   </form>
 </ion-content>

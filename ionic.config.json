@@ -1,5 +1,5 @@
 {
-  "name": "ionic4-radio",
+  "name": "ionic8-radio",
   "integrations": {},
-  "type": "angular"
+  "type": "angular-standalone"
 }

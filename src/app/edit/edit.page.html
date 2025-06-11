@@ -1,74 +1,13 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
     <ion-title>edit</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form [formGroup]="qsForm">
-    <ion-list>
-      <ion-list-header>
-        <ion-label>Single Choice:</ion-label>
-      </ion-list-header>
-      <div formArrayName="quests">
-        <div *ngFor="let qs of qsForm.get('quests')['controls']; let i=index" [formGroupName]="i">
-          <ion-radio-group formControlName="answer">
-            <ion-list-header>
-              <ion-label>{{qs.controls.nbr.value}}. {{qs.controls.question.value}}</ion-label>
-            </ion-list-header>
-            <ion-item>
-              <ion-label>{{qs.controls.choice1.value}}</ion-label>
-              <ion-radio slot="start" [value]="qs.controls.choice1.value"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs.controls.choice2.value}}</ion-label>
-              <ion-radio slot="start" [value]="qs.controls.choice2.value"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs.controls.choice3.value}}</ion-label>
-              <ion-radio slot="start" [value]="qs.controls.choice3.value"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs.controls.choice4.value}}</ion-label>
-              <ion-radio slot="start" [value]="qs.controls.choice4.value"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </div>
-      </div>
-      <ion-list-header>
-        <ion-label>Multiple Choices:</ion-label>
-      </ion-list-header>
-      <div formArrayName="quests2">
-        <div *ngFor="let qs2 of qsForm.get('quests2')['controls']; let j=index" [formGroupName]="j">
-          <ion-radio-group>
-            <ion-list-header>
-              <ion-label>{{qs2.controls.nbr.value}}. {{qs2.controls.question.value}}</ion-label>
-            </ion-list-header>
-            <ion-item>
-              <ion-label>{{qs2.controls.choice1.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice1.value" [checked]="setChecked(j, qs2.controls.choice1.value)" (click)="selectChecked(j, qs2.controls.choice1.value)"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs2.controls.choice2.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice2.value" [checked]="setChecked(j, qs2.controls.choice2.value)" (click)="selectChecked(j, qs2.controls.choice2.value)"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs2.controls.choice3.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice3.value" [checked]="setChecked(j, qs2.controls.choice3.value)" (click)="selectChecked(j, qs2.controls.choice3.value)"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-              <ion-label>{{qs2.controls.choice4.value}}</ion-label>
-              <ion-checkbox slot="start" [value]="qs2.controls.choice4.value" [checked]="setChecked(j, qs2.controls.choice4.value)" (click)="selectChecked(j, qs2.controls.choice4.value)"></ion-checkbox>
-            </ion-item>
-          </ion-radio-group>
-        </div>
-      </div>
-      <ion-item>
-        <ion-button shape="round" class="submit-button" (click)="onSubmit()">Submit</ion-button>
-      </ion-item>
-    </ion-list>
-  </form>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">edit</ion-title>
+    </ion-toolbar>
+  </ion-header>
 </ion-content>
